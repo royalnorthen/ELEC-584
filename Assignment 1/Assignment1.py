@@ -54,8 +54,14 @@ N_D_plus_plot = N_D_plus(E_F_plot)
 negatives_plot = n_plot + N_A_minus_plot
 positives_plot = p_plot + N_D_plus_plot
 
-Fermi_true = E_F_plot[np.argmin(np.abs(negatives_plot - positives_plot))]
+# calculations, including for part c)
+true_values_index = np.argmin(np.abs(negatives_plot - positives_plot))
+Fermi_true = E_F_plot[true_values_index]
+n_true = n_plot[true_values_index]
+p_true = p_plot[true_values_index]
 print(f"The true Fermi level is: {Fermi_true}")
+print(f"At the true Fermi level, n is: {n_true}")
+print(f"At the true Fermi level, p is: {p_true}")
 
 log_n_plot = np.clip(np.log10(n_plot), 0, None)
 log_p_plot = np.clip(np.log10(p_plot), 0, None)
