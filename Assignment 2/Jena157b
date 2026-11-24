@@ -1,0 +1,25 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+delV = 0.8               # V
+e = 1.6e-19              # C
+epsAlGaN = 9 * 8.85e-12  # F/m
+sigpi = 1.68e13          # cm^-2
+
+def n_s(tb):
+    thick_term = (delV * epsAlGaN / (e * tb))
+    thick_term *= 1e-4  # convert to cm^-2 from m^-2
+    return np.clip(sigpi - thick_term, 0, None)  # clipping out negative values
+
+tb_plot = np.linspace(1, 40, 10000) # dividing by zero is bad, 1 is nearly zero
+tb_plot_m = tb_plot * 1e-9   # convert to m from nm
+
+
+plt.plot(tb_plot, n_s(tb_plot_m), c='#0000FF')
+plt.plot(tb_plot, np.full(10000, sigpi), c="#FF0000", ls='--', alpha=0.4, label=r"$\sigma_\pi$")
+plt.legend()
+plt.xlabel(r"$t_b (nm)$")
+plt.ylabel(r"$n_s (cm^{-2})$")
+plt.title("Jena #15.7 b) - 2DEG charge density vs AlGaN thickness")
+
+plt.savefig('Jena-157-b.png', dpi=500, bbox_inches='tight', pad_inches=0.4)
